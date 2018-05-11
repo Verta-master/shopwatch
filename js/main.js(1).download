@@ -1,0 +1,168 @@
+$.fn.hasEventListener = function(eventType) {
+
+  if (!eventType)
+    return false;
+
+  var has = false;
+  var events = $(this).data('events');
+  if (events)
+    $.each(events, function(event) {
+      if (event == eventType)
+        has = true;
+    });
+
+  return has;
+}
+
+
+
+$(function () {
+    // Имитация placeholder
+    placeHolder();
+
+    toggleTabs('.social__toggle');
+    toggleTabs('.tabs__item');
+
+    $(".select__popup__item").on('click', function () {
+        window.location.replace($(this).find('a').attr('href'));
+    });
+
+    $('.sort').on('click', '.sort__item', function () {
+        $(this).toggleClass('sort__item_active');
+        $("input[type='checkbox']",this).attr("checked",$(this).hasClass('sort__item_active'));
+        
+    });
+
+    $('.btn-blue_reset').click(function () {
+        $('.sort__item').removeClass('sort__item_active');
+        $(".sort__item input[type='checkbox']").attr("checked",false);
+
+        // $(".sort__range").ionRangeSlider("update", {
+        // 	from: 0,
+        // 	to: 500000
+        // });
+        $('.sort__unit').each(function () {
+            $(this).find('input').val('');
+        });
+    });
+    $('.pics__mini').click(function (e) {
+        e.preventDefault();
+        $('.pics__big__img').attr('src', $(this).attr('href'));
+    });
+
+
+    show_popup($('.select'), $('.select__popup'));
+    $('.select__popup__item').click(function () {
+        $(this).closest('.select')
+                .find('.select__field')
+                .val($(this).text())
+                .end().find('.select__popup')
+                .hide();
+    });
+
+    $("a[rel^='prettyPhoto']").each(function () {
+        $(this).prepend('<div class="zoom">');
+    });
+
+    if(!$('.slider').length) {
+        $(".products").css('margin-top','25px');
+    }
+    
+    if(!$(".a-nav").length) {
+        $(".a-left").width('100%');
+    }
+
+        /* |===============| popups start |===============| */
+    $('.popup').click(function(e) {
+        e.stopPropagation();
+    })
+    $('.popup__close').click(function() {
+        $(this).closest('.popup').fadeOut('fast');
+    });
+
+    $("#wrapper").append($('.popup'));
+
+    $('[data-popup]').click(function(e) {
+        e.stopPropagation();
+        $('.popup').hide();
+        
+        centralize($($(this).attr('data-popup')));
+    });
+    
+    $(document).click(function() {
+        var $popup = $('.popup');
+        
+        if( $popup.is(':visible') )
+            $popup.fadeOut('fast');
+    });
+    /* |===============| popups end |===============| */
+
+});
+
+
+// Имитация placeholder
+function placeHolder() {
+    $('input[title], textarea[title]').each(function () {
+        var elem = $(this);
+        var val = elem.attr('title');
+
+        if (elem.val() == '')
+            elem.val(val);
+
+        elem
+                .focus(function () {
+                    var elem_in = $(this);
+
+                    if (elem_in.val() == val)
+                        elem_in.val("");
+                }).blur(function () {
+            var elem_in = $(this);
+
+            if (elem_in.val() == "")
+                elem_in.val(val);
+        });
+    });
+}
+;
+
+// перемещение по табам
+function toggleTabs(elem) {
+    $(elem).click(function () {
+        $(elem).removeClass(elem.slice(1) + '_active')
+
+        $('[class*=tab-]').hide();
+        $('.' + $(this).addClass(elem.slice(1) + '_active').attr('id')).show();
+    });
+}
+;
+
+function show_popup(clicked, show_elem) {
+    clicked.click(function (e) {
+        e.stopPropagation();
+        show_elem.click(function (e) {
+            e.stopPropagation()
+        });
+
+        $(this).find(show_elem).toggle();
+    });
+
+
+    $(document).click(function () {
+        if (show_elem.is(':visible')) {
+            show_elem.hide();
+        }
+        ;
+    });
+}
+;
+
+// функция центрирует по высоте передоваемый ей элемент а так же вызывает попапы.
+function centralize(elem) {
+    elem.add('.popups').fadeIn('fast');
+    var diff = ($(window).height() - elem.outerHeight());
+    
+    if(diff < 0 ) diff = 20;
+    
+    var elem_top = $(document).scrollTop() + ( diff /2);
+    elem.css('top', elem_top).click(function(e){ e.stopPropagation(); });
+};
