@@ -80,6 +80,22 @@
     margin: 0;
     transform: translateX(-50%);
   }
+  .p-info__box {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+  }
+  .p-info {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .p-info__unit__left {
+    float: none;
+    width: 100% !important;
+  }
+  .pics {
+    float: none;
+  }
 }
 
 //----------------------------
@@ -148,6 +164,14 @@
     &::after {
       display: none;
     }
+  }
+  .pics {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .p-info__box {
+    position: static;
+    margin-left: 20px;
   }
 }
 
@@ -269,6 +293,31 @@
     display: inline-block;
     vertical-align: middle;
   }
+  .pics {
+    width: 90%;
+  }
+  .comments_form textarea {
+    width: 100%;
+  }
+  .tabs__item {
+    font-size: 12px;
+  }
+  .tabs-box__prop__val,
+  .tabs-box__prop__title {
+    width: 50%;
+  }
+  .p-info {
+    margin-bottom: 150px;
+  }
+  .p-info__box {
+    float: none;
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+  .pics__big {
+    width: 100%;
+  }
 }
 
 //-------------------------
@@ -286,5 +335,39 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+  .pics .pics__big .pics__big__img {
+    max-width: 100%;
+  }
+  .tabs__item {
+    width: 100%;
+    float: none;
+    font-size: 14px;
+    border-left: none;
+    border-right: none;
+    
+    &:last-child {
+      border-bottom: 1px solid #00a2dc;
+    }
+  }
+  .tabs {
+    margin: 0;
+    width: 100%;
+  }
+  .tabs-box {
+    padding: 0;
+  }
+  .tabs-box__prop__val {
+    text-align: center;
+  }
+  .tabs-box__prop__title {
+    padding-left: 10px;
+  }
+  .infofield + input,
+  .infoform + input {
+    width: 100% !important;
+  }
+  .input-title {
+    display: block;
   }
 }
